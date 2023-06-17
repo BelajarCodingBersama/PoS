@@ -2,6 +2,7 @@
 
 use App\Api\Controllers\Admin\AdminProductController;
 use App\Api\Controllers\Admin\AdminProductTypeController;
+use App\Api\Controllers\Admin\AdminRoleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,5 +36,11 @@ Route::prefix('admin')->group(function () {
         Route::get('{product}/show', [AdminProductController::class, 'show']);
         Route::patch('{product}/update', [AdminProductController::class, 'update']);
         Route::delete('{product}/delete', [AdminProductController::class, 'destroy']);
+    });
+
+    Route::prefix('roles')->group(function() {
+        Route::get('/', [AdminRoleController::class, 'index']);
+        Route::post('store', [AdminRoleController::class, 'store']);
+        
     });
 });

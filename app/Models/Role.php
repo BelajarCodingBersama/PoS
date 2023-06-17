@@ -11,4 +11,10 @@ class Role extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['name', 'slug'];
+
+    /** Relationship */
+    public function Users ()
+    {
+        return $this->hasMany(User::class);
+    }
 }

@@ -9,14 +9,14 @@ use App\Api\Requests\RoleUpdateRequest;
 use app\Api\Resources\RoleResource;
 use App\Api\Resources\RoleResourceCollection;
 use App\Models\Role;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class AdminRoleController extends Controller 
+class AdminRoleController extends Controller
 {
    private $roleRepository;
-   
+
    public function __construct(RoleRepository $roleRepository)
    {
         $this->roleRepository = $roleRepository;
@@ -42,13 +42,13 @@ class AdminRoleController extends Controller
 
           $role = new Role();
           $this->roleRepository->save($role->fill($data));
-          
+
           DB::commit();
      } catch (\Throwable $th) {
           DB::rollBack();
 
           return response()->json([
-               'message' => 'Something went wrong, ' . $th->getMessage() 
+               'message' => 'Something went wrong, ' . $th->getMessage()
           ], 500);
      }
 
@@ -57,17 +57,17 @@ class AdminRoleController extends Controller
      ], 201);
    }
 
-   public function update(Role $role, RoleUpdateRequest $request)
+   public function update(RoleUpdateRequest $request, Role $role)
    {
      try {
           DB::beginTransaction();
 
           $request->merge([
-               'slug' => Str::slug($role->name)
+                'slug' => Str::slug($request->name)
           ]);
 
           $data = $request->only(['name', 'slug']);
-          
+
           $this->roleRepository->save($role->fill($data));
 
           DB::commit();
@@ -94,7 +94,7 @@ class AdminRoleController extends Controller
                     'message' => "Can't delete this data."
                ], 400);
           }
-          
+
           $role->delete();
 
           DB::commit();

@@ -43,7 +43,7 @@ class User extends Authenticatable
     ];
 
     /** Relationship */
-    public function Role ()
+    public function role()
     {
         return $this->belongsTo(Role::class);
     }

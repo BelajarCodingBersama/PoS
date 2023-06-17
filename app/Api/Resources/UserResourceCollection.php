@@ -16,10 +16,10 @@ class UserResourceCollection extends ResourceCollection
                 'id' => $user->id,
                 'username' => $user->username,
 
-                // 'role' => $this->when(
-                //     RequestHelper::doesQueryParamsHasValue($request->query('include'), 'role'),
-                //     (new UserTypeResource($user->userType))
-                // )
+                'role' => $this->when(
+                    RequestHelper::doesQueryParamsHasValue($request->query('include'), 'role'),
+                    (new RoleResource($user->role))
+                )
             ];
         });
 

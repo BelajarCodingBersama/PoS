@@ -41,6 +41,7 @@ Route::prefix('admin')->group(function () {
     Route::prefix('roles')->group(function() {
         Route::get('/', [AdminRoleController::class, 'index']);
         Route::post('store', [AdminRoleController::class, 'store']);
-        
+        Route::patch('{role}/update', [AdminRoleController::class, 'update']);
+        Route::delete('{role}/delete', [AdminRoleController::class, 'destroy']);
     });
 });

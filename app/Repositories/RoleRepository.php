@@ -3,13 +3,12 @@
 namespace App\Repositories;
 
 use App\Models\Role;
-use App\Models\User;
 
 class RoleRepository {
 
     private $model;
 
-    public function __construct(User $model)
+    public function __construct(Role $model)
     {
         $this->model = $model;
     }

@@ -22,9 +22,14 @@ class AdminProductTypeController extends Controller
         $this->productTypeRepository = $productTypeRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $productTypes = $this->productTypeRepository->get();
+        $productTypes = $this->productTypeRepository->get([
+            'search' => [
+                'name' => $request->name
+            ],
+            'paginate' => $request->per_page
+        ]);
 
         return new ProductTypeResourceCollection($productTypes);
     }

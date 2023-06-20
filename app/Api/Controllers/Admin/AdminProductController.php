@@ -9,6 +9,7 @@ use App\Api\Resources\ProductResourceCollection;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Repositories\ProductRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -21,9 +22,15 @@ class AdminProductController extends Controller
         $this->productRepository = $productRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $products = $this->productRepository->get();
+        $products = $this->productRepository->get([
+            'search' => [
+                'name' => $request->name,
+                'product_type_id' => $request->product_type_id
+            ],
+            'paginate' => $request->per_page
+        ]);
 
         return new ProductResourceCollection($products);
     }

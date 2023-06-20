@@ -20,9 +20,15 @@ class AdminUserController extends Controller
         $this->userRepository = $userRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $users = $this->userRepository->get();
+        $users = $this->userRepository->get([
+            'search' => [
+                'username' => $request->username,
+                'role_id' => $request->role_id
+            ],
+            'paginate' => $request->per_page
+        ]);
 
         return new UserResourceCollection($users);
     }

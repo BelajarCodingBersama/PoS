@@ -99,6 +99,11 @@ class AdminProductController extends Controller
         try {
             DB::beginTransaction();
 
+            // change name before delete
+            $this->productRepository->save($product->fill([
+                'name' => $product->name . '|' . now()
+            ]));
+
             $product->delete();
 
             DB::commit();

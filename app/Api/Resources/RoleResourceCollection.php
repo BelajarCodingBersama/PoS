@@ -10,7 +10,7 @@ class RoleResourceCollection extends ResourceCollection
     public function toArray(Request $request)
     {
         $data = [];
-        $data = $this->collection->transform(function($role) use($request) {
+        $data = $this->collection->transform(function ($role) use ($request) {
             return [
                 'id' => $role->id,
                 'name' => $role->name,

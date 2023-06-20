@@ -99,6 +99,11 @@ class AdminProductTypeController extends Controller
                 ], 400);
             }
 
+            // change name before delete
+            $this->productTypeRepository->save($productType->fill([
+                'name' => $productType->name . '|' . now()
+            ]));
+
             $productType->delete();
 
             DB::commit();

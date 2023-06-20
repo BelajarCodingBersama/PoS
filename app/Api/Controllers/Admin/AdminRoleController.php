@@ -12,6 +12,7 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Symfony\Component\Console\Input\Input;
 
 class AdminRoleController extends Controller
 {
@@ -29,7 +30,7 @@ class AdminRoleController extends Controller
         return new RoleResourceCollection($roles);
    }
 
-   public function store(RoleStoreRequest $request)
+   public function store(RoleStoreRequest $request, Role $role)
    {
      try {
           DB::beginTransaction();
@@ -63,7 +64,7 @@ class AdminRoleController extends Controller
           DB::beginTransaction();
 
           $request->merge([
-                'slug' => Str::slug($request->name)
+               'slug' => Str::slug($request->name)
           ]);
 
           $data = $request->only(['name', 'slug']);
@@ -95,7 +96,12 @@ class AdminRoleController extends Controller
                ], 400);
           }
 
-          $role->delete();
+          $softDeleted = $role->delete();
+
+          if ($softDeleted) {
+               $roleNameUpdated = $role->name = $role->name . '-' . $role->deleted_at;
+               $role->save();
+          }
 
           DB::commit();
      } catch (\Throwable $th) {

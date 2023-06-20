@@ -15,7 +15,14 @@ class RoleRepository {
 
     public function get($params = [])
     {
-        $roles = $this->model;
+        $roles = $this->model
+            ->when(!empty($params['search']['name']), function ($query) use ($params){
+                return $query->where('name', 'LIKE', '%' . $params['search']['name'] . '%' );
+            });
+
+        if (!empty($params['paginate'])) {
+            return $roles->paginate($params['paginate']);
+        }
 
         return $roles->get();
     }

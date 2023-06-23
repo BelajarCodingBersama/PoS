@@ -36,6 +36,13 @@ return [
             'throw' => false,
         ],
 
+        'hosting' => [
+            'driver' => 'local',
+            'root' => public_path('storage/'),
+            'url' => env('APP_URL').'/storage',
+            'throw' => false,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

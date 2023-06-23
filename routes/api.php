@@ -1,6 +1,7 @@
 <?php
 
 use App\Api\Controllers\Admin\AdminAuthController;
+use App\Api\Controllers\Admin\AdminFileController;
 use App\Api\Controllers\Admin\AdminProductController;
 use App\Api\Controllers\Admin\AdminProductTypeController;
 use App\Api\Controllers\Admin\AdminUserController;
@@ -56,6 +57,10 @@ Route::prefix('admin')->group(function () {
             Route::post('store', [AdminRoleController::class, 'store']);
             Route::patch('{role}/update', [AdminRoleController::class, 'update']);
             Route::delete('{role}/delete', [AdminRoleController::class, 'destroy']);
+        });
+
+        Route::prefix('files')->group(function () {
+            Route::post('store', [AdminFileController::class, 'store']);
         });
     });
 });

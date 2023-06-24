@@ -6,6 +6,7 @@ use App\Api\Controllers\Admin\AdminProductController;
 use App\Api\Controllers\Admin\AdminProductTypeController;
 use App\Api\Controllers\Admin\AdminUserController;
 use App\Api\Controllers\Admin\AdminRoleController;
+use App\Api\Controllers\Cashier\CashierCartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -62,5 +63,14 @@ Route::prefix('admin')->group(function () {
         Route::prefix('files')->group(function () {
             Route::post('store', [AdminFileController::class, 'store']);
         });
+    });
+});
+
+Route::prefix('cashier')->group(function () {
+    Route::prefix('carts')->group(function () {
+        Route::get('/', [CashierCartController::class, 'index']);
+        Route::post('store', [CashierCartController::class, 'store']);
+        Route::patch('{cart}/update', [CashierCartController::class, 'update']);
+        Route::delete('{cart}/delete', [CashierCartController::class, 'destroy']);
     });
 });

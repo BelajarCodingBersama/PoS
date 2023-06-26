@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api\Controllers\Admin;
+namespace App\Api\Controllers;
 
 use App\Api\Requests\LoginRequest;
 use App\Api\Resources\UserResource;
@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class AdminAuthController extends Controller
+class AuthController extends Controller
 {
     public function login(LoginRequest $request)
     {
@@ -17,15 +17,23 @@ class AdminAuthController extends Controller
 
         if (
             !$user ||
-            !Hash::check($request->password, $user->password) ||
-            $user->role->slug != 'admin'
+            !Hash::check($request->password, $user->password)
         ) {
             return response()->json([
                 'message' => 'Login credentials are invalid'
             ], 403);
         }
 
-        $token = $user->createToken('authToken', ['admin'])->plainTextToken;
+        $role = $user->role->slug;
+        $ability = '';
+
+        if ($role == 'admin') {
+            $ability = 'admin';
+        } else if ($role == 'cashier') {
+            $ability = 'cashier';
+        }
+
+        $token = $user->createToken('authToken', [$ability])->plainTextToken;
 
         return response()->json([
             'user' => new UserResource($user),

@@ -7,6 +7,7 @@ use App\Api\Controllers\Admin\AdminProductTypeController;
 use App\Api\Controllers\Admin\AdminUserController;
 use App\Api\Controllers\Admin\AdminRoleController;
 use App\Api\Controllers\Cashier\CashierCartController;
+use App\Api\Controllers\Cashier\CashierTransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -72,5 +73,9 @@ Route::prefix('cashier')->group(function () {
         Route::post('store', [CashierCartController::class, 'store']);
         Route::patch('{cart}/update', [CashierCartController::class, 'update']);
         Route::delete('{cart}/delete', [CashierCartController::class, 'destroy']);
+    });
+
+    Route::prefix('transactions')->group(function() {
+        Route::get('/', [CashierTransactionController::class, 'index']);
     });
 });

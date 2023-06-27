@@ -74,5 +74,6 @@ Route::prefix('cashier')->middleware('auth:sanctum', 'abilities:cashier')->group
 
     Route::prefix('transactions')->group(function() {
         Route::get('/', [CashierTransactionController::class, 'index']);
+        Route::post('store', [CashierTransactionController::class, 'store']);
     });
 });

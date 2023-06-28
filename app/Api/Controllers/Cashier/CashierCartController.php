@@ -8,6 +8,7 @@ use App\Api\Resources\CartResourceCollection;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Repositories\CartRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CashierCartController extends Controller
@@ -19,9 +20,13 @@ class CashierCartController extends Controller
         $this->cartRepository = $cartRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $carts = $this->cartRepository->get();
+        $carts = $this->cartRepository->get([
+            'search' => [
+                'user_id' => auth()->id()
+            ]
+        ]);
 
         return new CartResourceCollection($carts);
     }
@@ -69,6 +74,8 @@ class CashierCartController extends Controller
 
     public function update(CartUpdateRequest $request, Cart $cart)
     {
+        $this->authorize('update', $cart);
+
         try {
             DB::beginTransaction();
 
@@ -92,6 +99,8 @@ class CashierCartController extends Controller
 
     public function destroy(Cart $cart)
     {
+        $this->authorize('delete', $cart);
+
         try {
             DB::beginTransaction();
 

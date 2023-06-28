@@ -13,9 +13,12 @@ class CartRepository
         $this->model = $model;
     }
 
-    public function get()
+    public function get($params = [])
     {
-        $carts = $this->model;
+        $carts = $this->model
+            ->when(!empty($params['search']['user_id']), function ($query) use ($params) {
+                return $query->where('user_id', $params['search']['user_id']);
+            });
 
         return $carts->get();
     }

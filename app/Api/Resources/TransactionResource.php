@@ -17,7 +17,11 @@ class TransactionResource extends JsonResource
 
             'user' => $this->when(
                 RequestHelper::doesQueryParamsHasValue($request->query('include'), 'user'),
-                (new TransactionResource($this->user))
+                (new UserResource($this->user))
+            ),
+            'details' => $this->when(
+                RequestHelper::doesQueryParamsHasValue($request->query('include'), 'details'),
+                (new TransactionDetailResourceCollection($this->details))
             )
         ];
     }

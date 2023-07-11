@@ -6,22 +6,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Transaction extends Model
+class TransactionDetail extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'sub_total', 'total', 'user_id'
+        'price', 'amount', 'product_id', 'transaction_id'
     ];
 
     /** Relationship */
-    public function user()
+    public function product()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Product::class);
     }
 
-    public function details()
+    public function transaction()
     {
-        return $this->hasMany(TransactionDetail::class);
+        return $this->belongsTo(Transaction::class);
     }
 }

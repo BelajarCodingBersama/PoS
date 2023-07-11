@@ -19,7 +19,11 @@ class TransactionResourceCollection extends ResourceCollection
 
                 'user' => $this->when(
                     RequestHelper::doesQueryParamsHasValue($request->query('include'), 'user'),
-                    (new TransactionResource($transaction->user))
+                    (new UserResource($transaction->user))
+                ),
+                'details' => $this->when(
+                    RequestHelper::doesQueryParamsHasValue($request->query('include'), 'details'),
+                    (new TransactionDetailResourceCollection($transaction->details))
                 )
             ];
         });

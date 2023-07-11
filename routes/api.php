@@ -5,6 +5,7 @@ use App\Api\Controllers\Admin\AdminProductController;
 use App\Api\Controllers\Admin\AdminProductTypeController;
 use App\Api\Controllers\Admin\AdminUserController;
 use App\Api\Controllers\Admin\AdminRoleController;
+use App\Api\Controllers\Admin\AdminTransactionController;
 use App\Api\Controllers\AuthController;
 use App\Api\Controllers\Cashier\CashierCartController;
 use App\Api\Controllers\Cashier\CashierTransactionController;
@@ -45,7 +46,7 @@ Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(fun
         Route::patch('{user}/update', [AdminUserController::class, 'update']);
     });
 
-    Route::prefix('roles')->group(function() {
+    Route::prefix('roles')->group(function () {
         Route::get('/', [AdminRoleController::class, 'index']);
         Route::post('store', [AdminRoleController::class, 'store']);
         Route::patch('{role}/update', [AdminRoleController::class, 'update']);
@@ -54,6 +55,11 @@ Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(fun
 
     Route::prefix('files')->group(function () {
         Route::post('store', [AdminFileController::class, 'store']);
+    });
+
+    Route::prefix('transactions')->group(function () {
+        Route::get('/', [AdminTransactionController::class, 'index']);
+        Route::get('{transaction}/show', [AdminTransactionController::class, 'show']);
     });
 });
 
@@ -73,7 +79,6 @@ Route::prefix('cashier')->middleware('auth:sanctum', 'abilities:cashier')->group
     });
 
     Route::prefix('transactions')->group(function() {
-        Route::get('/', [CashierTransactionController::class, 'index']);
         Route::post('store', [CashierTransactionController::class, 'store']);
     });
 });

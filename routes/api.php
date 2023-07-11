@@ -6,6 +6,7 @@ use App\Api\Controllers\Admin\AdminProductTypeController;
 use App\Api\Controllers\Admin\AdminUserController;
 use App\Api\Controllers\Admin\AdminRoleController;
 use App\Api\Controllers\Admin\AdminTransactionController;
+use App\Api\Controllers\Admin\AdminSellerController;
 use App\Api\Controllers\AuthController;
 use App\Api\Controllers\Cashier\CashierCartController;
 use App\Api\Controllers\Cashier\CashierTransactionController;
@@ -60,6 +61,13 @@ Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(fun
     Route::prefix('transactions')->group(function () {
         Route::get('/', [AdminTransactionController::class, 'index']);
         Route::get('{transaction}/show', [AdminTransactionController::class, 'show']);
+    });
+
+    Route::prefix('sellers')->group(function () {
+        Route::get('/', [AdminSellerController::class, 'index']);
+        Route::post('store', [AdminSellerController::class, 'store']);
+        Route::patch('{seller}/update', [AdminSellerController::class, 'update']);
+        Route::delete('{seller}/delete', [AdminSellerController::class, 'destroy']);
     });
 });
 

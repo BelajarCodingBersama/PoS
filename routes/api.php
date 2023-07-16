@@ -9,6 +9,7 @@ use App\Api\Controllers\Admin\AdminSellerController;
 use App\Api\Controllers\AuthController;
 use App\Api\Controllers\Cashier\CashierCartController;
 use App\Api\Controllers\Cashier\CashierTransactionController;
+use App\Api\Controllers\FinancePurchaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -83,5 +84,14 @@ Route::prefix('cashier')->middleware('auth:sanctum', 'abilities:cashier')->group
     Route::prefix('transactions')->group(function() {
         Route::get('/', [CashierTransactionController::class, 'index']);
         Route::post('store', [CashierTransactionController::class, 'store']);
+    });
+});
+
+Route::prefix('finance')->group(function () {
+    Route::prefix('purchases')->group(function () {
+        Route::get('/', [FinancePurchaseController::class, 'index']);
+        Route::post('store', [FinancePurchaseController::class, 'store']);
+        Route::patch('{purchase}/update', [FinancePurchaseController::class, 'update']);
+        Route::delete('{purchase}/delete', [FinancePurchaseController::class, 'destroy']);
     });
 });

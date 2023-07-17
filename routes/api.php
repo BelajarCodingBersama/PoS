@@ -10,7 +10,7 @@ use App\Api\Controllers\Admin\AdminSellerController;
 use App\Api\Controllers\AuthController;
 use App\Api\Controllers\Cashier\CashierCartController;
 use App\Api\Controllers\Cashier\CashierTransactionController;
-use App\Api\Controllers\FinancePurchaseController;
+use App\Api\Controllers\Finance\FinancePurchaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -92,7 +92,7 @@ Route::prefix('cashier')->middleware('auth:sanctum', 'abilities:cashier')->group
     });
 });
 
-Route::prefix('finance')->group(function () {
+Route::prefix('finance')->middleware('auth:sanctum', 'abilities:finance')->group(function () {
     Route::prefix('purchases')->group(function () {
         Route::get('/', [FinancePurchaseController::class, 'index']);
         Route::post('store', [FinancePurchaseController::class, 'store']);

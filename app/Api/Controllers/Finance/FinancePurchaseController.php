@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Api\Controllers;
+namespace App\Api\Controllers\Finance;
 
+use App\Api\Requests\PurchaseStoreRequest;
+use App\Api\Requests\PurchaseUpdateRequest;
+use App\Api\Resources\PurchaseResourceCollection;
 use App\Http\Controllers\Controller;
 use App\Models\Purchase;
 use App\Repositories\PurchaseRepository;
@@ -17,14 +20,16 @@ class FinancePurchaseController extends Controller
         $this->purchaseRepository = $purchaseRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $purchases = $this->purchaseRepository->get();
+        $purchases = $this->purchaseRepository->get([
+            'paginate' => $request->per_page
+        ]);
 
-        return response()->json($purchases);
+        return new PurchaseResourceCollection($purchases);
     }
 
-    public function store(Request $request)
+    public function store(PurchaseStoreRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -53,7 +58,7 @@ class FinancePurchaseController extends Controller
         ], 201);
     }
 
-    public function update(Request $request, Purchase $purchase)
+    public function update(PurchaseUpdateRequest $request, Purchase $purchase)
     {
         try {
             DB::beginTransaction();

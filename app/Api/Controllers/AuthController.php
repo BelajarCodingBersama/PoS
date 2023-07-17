@@ -31,6 +31,8 @@ class AuthController extends Controller
             $ability = 'admin';
         } else if ($role == 'cashier') {
             $ability = 'cashier';
+        } else if ($role == 'finance') {
+            $ability = 'finance';
         }
 
         $token = $user->createToken('authToken', [$ability])->plainTextToken;

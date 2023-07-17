@@ -13,9 +13,13 @@ class PurchaseRepository
         $this->model = $model;
     }
 
-    public function get()
+    public function get($params = [])
     {
         $purchases = $this->model;
+
+        if (!empty($params['paginate'])) {
+            return $purchases->paginate($params['paginate']);
+        }
 
         return $purchases->get();
     }

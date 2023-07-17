@@ -60,6 +60,8 @@ class FinancePurchaseController extends Controller
 
     public function update(PurchaseUpdateRequest $request, Purchase $purchase)
     {
+        $this->authorize('update', $purchase);
+
         try {
             DB::beginTransaction();
 
@@ -86,6 +88,8 @@ class FinancePurchaseController extends Controller
 
     public function destroy(Purchase $purchase)
     {
+        $this->authorize('delete', $purchase);
+
         try {
             DB::beginTransaction();
 

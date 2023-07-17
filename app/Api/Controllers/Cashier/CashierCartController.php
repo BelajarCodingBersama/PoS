@@ -36,10 +36,8 @@ class CashierCartController extends Controller
         try {
             DB::beginTransaction();
 
-            $request->merge(['user_id' => 1]);
-
             /** check product in cart */
-            $productInCart = Cart::where('user_id', $request->user_id)
+            $productInCart = Cart::where('user_id', auth()->id())
                                 ->where('product_id', $request->product_id)
                                 ->first();
 

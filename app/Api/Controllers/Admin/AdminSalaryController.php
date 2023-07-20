@@ -18,7 +18,7 @@ class AdminSalaryController extends Controller
 
     public function __construct(SalaryRepository $salaryRepository)
     {
-        return $this->salaryRepository = $salaryRepository;
+        $this->salaryRepository = $salaryRepository;
     }
 
     public function index(Request $request)

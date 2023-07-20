@@ -1,5 +1,6 @@
 <?php
 
+use App\Api\Controllers\Admin\AdminExpenseTypeController;
 use App\Api\Controllers\Admin\AdminFileController;
 use App\Api\Controllers\Admin\AdminProductController;
 use App\Api\Controllers\Admin\AdminProductTypeController;
@@ -77,6 +78,13 @@ Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(fun
         Route::post('store', [AdminSalaryController::class, 'store']);
         Route::patch('{salary}/update', [AdminSalaryController::class, 'update']);
         Route::delete('{salary}/delete', [AdminSalaryController::class, 'destroy']);
+    });
+
+    Route::prefix('expense-types')->group(function () {
+        Route::get('/', [AdminExpenseTypeController::class, 'index']);
+        Route::post('store', [AdminExpenseTypeController::class, 'store']);
+        Route::patch('{expenseType}/update', [AdminExpenseTypeController::class, 'update']);
+        Route::delete('{expenseType}/delete', [AdminExpenseTypeController::class, 'destroy']);
     });
 });
 

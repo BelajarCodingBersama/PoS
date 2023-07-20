@@ -5,6 +5,7 @@ use App\Api\Controllers\Admin\AdminProductController;
 use App\Api\Controllers\Admin\AdminProductTypeController;
 use App\Api\Controllers\Admin\AdminUserController;
 use App\Api\Controllers\Admin\AdminRoleController;
+use App\Api\Controllers\Admin\AdminSalaryController;
 use App\Api\Controllers\Admin\AdminTransactionController;
 use App\Api\Controllers\Admin\AdminSellerController;
 use App\Api\Controllers\AuthController;
@@ -69,6 +70,13 @@ Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(fun
         Route::post('store', [AdminSellerController::class, 'store']);
         Route::patch('{seller}/update', [AdminSellerController::class, 'update']);
         Route::delete('{seller}/delete', [AdminSellerController::class, 'destroy']);
+    });
+
+    Route::prefix('salaries')->group(function () {
+        Route::get('/', [AdminSalaryController::class, 'index']);
+        Route::post('store', [AdminSalaryController::class, 'store']);
+        Route::patch('{salary}/update', [AdminSalaryController::class, 'update']);
+        Route::delete('{salary}/delete', [AdminSalaryController::class, 'destroy']);
     });
 });
 

@@ -9,6 +9,7 @@ use App\Api\Controllers\Admin\AdminRoleController;
 use App\Api\Controllers\Admin\AdminSalaryController;
 use App\Api\Controllers\Admin\AdminTransactionController;
 use App\Api\Controllers\Admin\AdminSellerController;
+use App\Api\Controllers\Admin\AdminUnitTypeController;
 use App\Api\Controllers\AuthController;
 use App\Api\Controllers\Cashier\CashierCartController;
 use App\Api\Controllers\Cashier\CashierTransactionController;
@@ -85,6 +86,13 @@ Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(fun
         Route::post('store', [AdminExpenseTypeController::class, 'store']);
         Route::patch('{expenseType}/update', [AdminExpenseTypeController::class, 'update']);
         Route::delete('{expenseType}/delete', [AdminExpenseTypeController::class, 'destroy']);
+    });
+
+    Route::prefix('unit-types')->group(function () {
+        Route::get('/', [AdminUnitTypeController::class, 'index']);
+        Route::post('store', [AdminUnitTypeController::class, 'store']);
+        Route::patch('{unitType}/update', [AdminUnitTypeController::class, 'update']);
+        Route::delete('{unitType}/delete', [AdminUnitTypeController::class, 'destroy']);
     });
 });
 

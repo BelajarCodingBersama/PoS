@@ -2,12 +2,12 @@
 
 namespace App\Api\Controllers\Admin;
 
+use App\Api\Requests\UnitTypeStoreRequest;
+use App\Api\Requests\UnitTypeUpdateRequest;
+use App\Api\Resources\UnitTypeResourceCollection;
 use App\Http\Controllers\Controller;
-use App\Repositories\unitTypeRepository;
-use App\Api\Requests\unitTypeStoreRequest;
-use App\Api\Requests\unitTypeUpdateRequest;
-use App\Api\Resources\unitTypeResourceCollection;
-use App\Models\unitType;
+use App\Models\UnitType;
+use App\Repositories\UnitTypeRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -15,7 +15,7 @@ class AdminunitTypeController extends Controller
 {
    private $unitTypeRepository;
 
-   public function __construct(unitTypeRepository $unitTypeRepository)
+   public function __construct(UnitTypeRepository $unitTypeRepository)
    {
         $this->unitTypeRepository = $unitTypeRepository;
    }
@@ -24,10 +24,10 @@ class AdminunitTypeController extends Controller
    {
         $unitTypes = $this->unitTypeRepository->get();
 
-        return new unitTypeResourceCollection($unitTypes);
+        return new UnitTypeResourceCollection($unitTypes);
    }
 
-    public function store(unitTypeStoreRequest $request)
+    public function store(UnitTypeStoreRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -36,7 +36,7 @@ class AdminunitTypeController extends Controller
 
             $data = $request->only(['name']);
 
-            $unitType = new unitType();
+            $unitType = new UnitType();
             $this->unitTypeRepository->save($unitType->fill($data));
 
             DB::commit();
@@ -53,7 +53,7 @@ class AdminunitTypeController extends Controller
         ], 201);
     }
 
-    public function update(unitTypeUpdateRequest $request, unitType $unitType)
+    public function update(UnitTypeUpdateRequest $request, UnitType $unitType)
     {
         try {
             DB::beginTransaction();
@@ -78,7 +78,7 @@ class AdminunitTypeController extends Controller
         ], 201);
     }
 
-    public function destroy(unitType $unitType)
+    public function destroy(UnitType $unitType)
     {
         try {
             DB::beginTransaction();

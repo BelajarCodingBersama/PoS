@@ -96,7 +96,7 @@ Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(fun
         Route::delete('{unitType}/delete', [AdminUnitTypeController::class, 'destroy']);
     });
 
-    Route::prefix('payroll-setting')->group(function () {
+    Route::prefix('payroll-settings')->group(function () {
         Route::get('/', [AdminPayrollSettingController::class, 'index']);
         Route::post('store', [AdminPayrollSettingController::class, 'store']);
         Route::patch('{payrollSetting}/update', [AdminPayrollSettingController::class, 'update']);

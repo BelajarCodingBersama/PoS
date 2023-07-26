@@ -10,4 +10,10 @@ class UnitType extends Model
     use HasFactory;
 
     protected $fillable = ['name'];
+
+    /** Relationship */
+    public function payrollSettings()
+    {
+        return $this->hasMany(PayrollSetting::class);
+    }
 }

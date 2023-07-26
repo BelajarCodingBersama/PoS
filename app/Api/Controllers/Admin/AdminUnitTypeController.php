@@ -83,6 +83,12 @@ class AdminunitTypeController extends Controller
         try {
             DB::beginTransaction();
 
+            if ($unitType->payrollSettings->count() >= 1) {
+                return response()->json([
+                    'message' => "Can't delete this data."
+                ], 400);
+            }
+
             $unitType->delete();
 
             DB::commit();

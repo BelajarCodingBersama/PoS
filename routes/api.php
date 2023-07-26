@@ -2,6 +2,7 @@
 
 use App\Api\Controllers\Admin\AdminExpenseTypeController;
 use App\Api\Controllers\Admin\AdminFileController;
+use App\Api\Controllers\Admin\AdminPayrollSettingController;
 use App\Api\Controllers\Admin\AdminProductController;
 use App\Api\Controllers\Admin\AdminProductTypeController;
 use App\Api\Controllers\Admin\AdminUserController;
@@ -93,6 +94,13 @@ Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(fun
         Route::post('store', [AdminUnitTypeController::class, 'store']);
         Route::patch('{unitType}/update', [AdminUnitTypeController::class, 'update']);
         Route::delete('{unitType}/delete', [AdminUnitTypeController::class, 'destroy']);
+    });
+
+    Route::prefix('payroll-settings')->group(function () {
+        Route::get('/', [AdminPayrollSettingController::class, 'index']);
+        Route::post('store', [AdminPayrollSettingController::class, 'store']);
+        Route::patch('{payrollSetting}/update', [AdminPayrollSettingController::class, 'update']);
+        Route::delete('{payrollSetting}/delete', [AdminPayrollSettingController::class, 'destroy']);
     });
 });
 

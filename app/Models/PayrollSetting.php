@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UnitType extends Model
+class PayrollSetting extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'nominal', 'unit_type_id'];
 
     /** Relationship */
-    public function payrollSettings()
+    public function unitType()
     {
-        return $this->hasMany(PayrollSetting::class);
+        return $this->belongsTo(UnitType::class);
     }
 }

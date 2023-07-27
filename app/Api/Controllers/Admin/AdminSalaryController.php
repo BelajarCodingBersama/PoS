@@ -36,7 +36,7 @@ class AdminSalaryController extends Controller
             DB::beginTransaction();
 
             $data = $request->only([
-                'role_id', 'amount'
+                'role_id', 'nominal'
             ]);
 
             $salary = new Salary();
@@ -62,7 +62,7 @@ class AdminSalaryController extends Controller
             DB::beginTransaction();
 
             $data = $request->only([
-                'role_id', 'amount'
+                'role_id', 'nominal'
             ]);
 
             $this->salaryRepository->save($salary->fill($data));

@@ -11,7 +11,7 @@ class Salary extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'role_id', 'amount'
+        'role_id', 'nominal'
     ];
 
     /** Relationship */

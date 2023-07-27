@@ -12,7 +12,7 @@ class SalaryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'amount' => $this->amount,
+            'nominal' => $this->nominal,
 
             'role' => $this->when(
                 RequestHelper::doesQueryParamsHasValue($request->query('include'), 'role'),

@@ -14,7 +14,7 @@ class SalaryResourceCollection extends ResourceCollection
         $data = $this->collection->transform(function ($salary) use ($request) {
             return [
                 'id' => $salary->id,
-                'amount' => $salary->amount,
+                'nominal' => $salary->nominal,
 
                 'role' => $this->when(
                     RequestHelper::doesQueryParamsHasValue($request->query('include'), 'role'),

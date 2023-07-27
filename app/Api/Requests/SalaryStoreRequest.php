@@ -15,7 +15,7 @@ class SalaryStoreRequest extends FormRequest
     {
         return [
             'role_id' => 'required|exists:roles,id',
-            'amount' => 'required|integer'
+            'nominal' => 'required|integer'
         ];
     }
 }

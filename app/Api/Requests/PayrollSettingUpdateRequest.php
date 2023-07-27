@@ -15,7 +15,7 @@ class PayrollSettingUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|unique:payroll_settings,name,'. $this->payrollSetting->id,
-            'nominal' => 'required|integer',
+            'nominal' => 'required|integer|gte:1',
             'unit_type_id' => 'required|exists:unit_types,id'
         ];
     }

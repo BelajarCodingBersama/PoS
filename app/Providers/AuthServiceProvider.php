@@ -5,8 +5,10 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 
 use App\Models\Cart;
+use App\Models\Payroll;
 use App\Models\Purchase;
 use App\Policies\CartPolicy;
+use App\Policies\PayrollPolicy;
 use App\Policies\PurchasePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -19,7 +21,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Cart::class => CartPolicy::class,
-        Purchase::class => PurchasePolicy::class
+        Purchase::class => PurchasePolicy::class,
+        Payroll::class => PayrollPolicy::class
     ];
 
     /**

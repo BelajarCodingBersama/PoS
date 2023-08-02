@@ -72,6 +72,7 @@ Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(fun
     Route::prefix('sellers')->group(function () {
         Route::get('/', [AdminSellerController::class, 'index']);
         Route::post('store', [AdminSellerController::class, 'store']);
+        Route::get('{seller}/show', [AdminSellerController::class, 'show']);
         Route::patch('{seller}/update', [AdminSellerController::class, 'update']);
         Route::delete('{seller}/delete', [AdminSellerController::class, 'destroy']);
     });

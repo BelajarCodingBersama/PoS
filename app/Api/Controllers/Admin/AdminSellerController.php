@@ -4,6 +4,7 @@ namespace App\Api\Controllers\Admin;
 
 use App\Api\Requests\SellerStoreRequest;
 use App\Api\Requests\SellerUpdateRequest;
+use App\Api\Resources\SellerResource;
 use App\Api\Resources\SellerResourceCollection;
 use App\Http\Controllers\Controller;
 use App\Models\Seller;
@@ -57,6 +58,11 @@ class AdminSellerController extends Controller
         return response()->json([
             'message' => 'Seller successfully created.'
         ], 201);
+    }
+
+    public function show(Seller $seller)
+    {
+        return new SellerResource($seller);
     }
 
     public function update(SellerUpdateRequest $request, Seller $seller)

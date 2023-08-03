@@ -108,7 +108,7 @@ class AdminRoleController extends Controller
           $softDeleted = $role->delete();
 
           if ($softDeleted) {
-               $roleNameUpdated = $role->name = $role->name . '-' . $role->deleted_at;
+               $roleNameUpdated = $role->name = $role->name . '|' . $role->deleted_at;
                $role->save();
           }
 

@@ -14,7 +14,7 @@ class SalaryUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'role_id' => 'required|exists:roles,id',
+            'role_id' => 'required|exists:roles,id|unique:salaries,role_id,'. $this->salary->id,
             'nominal' => 'required|integer'
         ];
     }

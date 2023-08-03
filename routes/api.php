@@ -56,6 +56,7 @@ Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(fun
     Route::prefix('roles')->group(function () {
         Route::get('/', [AdminRoleController::class, 'index']);
         Route::post('store', [AdminRoleController::class, 'store']);
+        Route::get('{role}/show', [AdminRoleController::class, 'show']);
         Route::patch('{role}/update', [AdminRoleController::class, 'update']);
         Route::delete('{role}/delete', [AdminRoleController::class, 'destroy']);
     });

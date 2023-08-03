@@ -23,9 +23,14 @@ class AdminRoleController extends Controller
         $this->roleRepository = $roleRepository;
    }
 
-   public function index()
+   public function index(Request $request)
    {
-        $roles = $this->roleRepository->get();
+        $roles = $this->roleRepository->get([
+            'search' => [
+                'name' => $request->name
+            ],
+            'paginate' => $request->per_page
+        ]);
 
         return new RoleResourceCollection($roles);
    }

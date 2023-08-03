@@ -4,6 +4,7 @@ namespace App\Api\Controllers\Admin;
 
 use App\Api\Requests\SalaryStoreRequest;
 use App\Api\Requests\SalaryUpdateRequest;
+use App\Api\Resources\SalaryResource;
 use App\Api\Resources\SalaryResourceCollection;
 use App\Http\Controllers\Controller;
 use App\Models\Role;
@@ -54,6 +55,11 @@ class AdminSalaryController extends Controller
         return response()->json([
             'message' => 'Salary successfully created.'
         ], 201);
+    }
+
+    public function show(Salary $salary)
+    {
+        return new SalaryResource($salary);
     }
 
     public function update(SalaryUpdateRequest $request, Salary $salary)

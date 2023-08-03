@@ -81,6 +81,7 @@ Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(fun
     Route::prefix('salaries')->group(function () {
         Route::get('/', [AdminSalaryController::class, 'index']);
         Route::post('store', [AdminSalaryController::class, 'store']);
+        Route::get('{salary}/show', [AdminSalaryController::class, 'show']);
         Route::patch('{salary}/update', [AdminSalaryController::class, 'update']);
         Route::delete('{salary}/delete', [AdminSalaryController::class, 'destroy']);
     });

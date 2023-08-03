@@ -95,6 +95,17 @@ class AdminSellerController extends Controller
         try {
             DB::beginTransaction();
 
+            if ($seller->purchases->count() >= 1) {
+                return response()->json([
+                    'message' => "Can't delete this data."
+                ], 400);
+            }
+
+            // change name before delete
+            $this->sellerRepository->save($seller->fill([
+                'name' => $seller->name . '|' . now()
+            ]));
+
             $seller->delete();
 
             DB::commit();

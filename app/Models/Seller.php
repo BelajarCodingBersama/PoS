@@ -13,4 +13,10 @@ class Seller extends Model
     protected $fillable = [
         'name', 'slug'
     ];
+
+    /** Relationship */
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
+    }
 }

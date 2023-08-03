@@ -6,13 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Repositories\RoleRepository;
 use App\Api\Requests\RoleStoreRequest;
 use App\Api\Requests\RoleUpdateRequest;
-use app\Api\Resources\RoleResource;
+use App\Api\Resources\RoleResource;
 use App\Api\Resources\RoleResourceCollection;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Symfony\Component\Console\Input\Input;
 
 class AdminRoleController extends Controller
 {
@@ -62,6 +61,11 @@ class AdminRoleController extends Controller
           'message' => 'Role successfully created.'
      ], 201);
    }
+
+    public function show(Role $role)
+    {
+        return new RoleResource($role);
+    }
 
    public function update(RoleUpdateRequest $request, Role $role)
    {

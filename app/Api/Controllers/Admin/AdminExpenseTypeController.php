@@ -24,7 +24,7 @@ class AdminExpenseTypeController extends Controller
     public function index(Request $request)
     {
         $expenseTypes = $this->expenseTypeRepository->get([
-            'seacrh' => [
+            'search' => [
                 'name' => $request->name
             ],
             'paginate' => $request->per_page

@@ -4,6 +4,7 @@ namespace App\Api\Controllers\Admin;
 
 use App\Api\Requests\ExpenseTypeStoreRequest;
 use App\Api\Requests\ExpenseTypeUpdateRequest;
+use App\Api\Resources\ExpenseTypeResource;
 use App\Api\Resources\ExpenseTypeResourceCollection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -61,6 +62,11 @@ class AdminExpenseTypeController extends Controller
         ], 201);
     }
 
+    public function show(ExpenseType $expenseType)
+    {
+        return new ExpenseTypeResource($expenseType);
+    }
+
     public function update(ExpenseTypeUpdateRequest $request, ExpenseType $expenseType)
     {
         try {
@@ -92,6 +98,11 @@ class AdminExpenseTypeController extends Controller
     {
         try {
             DB::beginTransaction();
+
+            // change name before delete
+            $this->expenseTypeRepository->save($expenseType->fill([
+                'name' => $expenseType->name . '|' . now()
+            ]));
 
             $expenseType->delete();
 

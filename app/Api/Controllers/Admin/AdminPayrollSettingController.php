@@ -4,6 +4,7 @@ namespace App\Api\Controllers\Admin;
 
 use App\Api\Requests\PayrollSettingStoreRequest;
 use App\Api\Requests\PayrollSettingUpdateRequest;
+use App\Api\Resources\PayrollSettingResource;
 use App\Api\Resources\PayrollSettingResourceCollection;
 use App\Http\Controllers\Controller;
 use App\Models\PayrollSetting;
@@ -51,6 +52,11 @@ class AdminPayrollSettingController extends Controller
         return response()->json([
             'message' => 'payroll setting successfully created.'
         ], 201);
+    }
+
+    public function show(PayrollSetting $payrollSetting)
+    {
+        return new PayrollSettingResource($payrollSetting);
     }
 
     public function update(PayrollSettingUpdateRequest $request, PayrollSetting $payrollSetting)

@@ -4,6 +4,7 @@ namespace App\Api\Controllers\Admin;
 
 use App\Api\Requests\UnitTypeStoreRequest;
 use App\Api\Requests\UnitTypeUpdateRequest;
+use App\Api\Resources\UnitTypeResource;
 use App\Api\Resources\UnitTypeResourceCollection;
 use App\Http\Controllers\Controller;
 use App\Models\UnitType;
@@ -51,6 +52,11 @@ class AdminunitTypeController extends Controller
         return response()->json([
             'message' => 'unit type successfully created.'
         ], 201);
+    }
+
+    public function show(UnitType $unitType)
+    {
+        return new UnitTypeResource($unitType);
     }
 
     public function update(UnitTypeUpdateRequest $request, UnitType $unitType)

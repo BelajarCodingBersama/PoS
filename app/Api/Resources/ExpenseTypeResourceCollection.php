@@ -12,6 +12,7 @@ class ExpenseTypeResourceCollection extends ResourceCollection
         $data = [];
         $data = $this->collection->transform(function ($expenseType) use ($request) {
             return [
+                'id' => $expenseType->id,
                 'name' => $expenseType->name,
                 'slug' => $expenseType->slug
             ];

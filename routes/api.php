@@ -89,6 +89,7 @@ Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(fun
     Route::prefix('expense-types')->group(function () {
         Route::get('/', [AdminExpenseTypeController::class, 'index']);
         Route::post('store', [AdminExpenseTypeController::class, 'store']);
+        Route::get('{expenseType}/show', [AdminExpenseTypeController::class, 'show']);
         Route::patch('{expenseType}/update', [AdminExpenseTypeController::class, 'update']);
         Route::delete('{expenseType}/delete', [AdminExpenseTypeController::class, 'destroy']);
     });

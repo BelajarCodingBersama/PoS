@@ -9,6 +9,7 @@ use App\Api\Resources\UnitTypeResourceCollection;
 use App\Http\Controllers\Controller;
 use App\Models\UnitType;
 use App\Repositories\UnitTypeRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -21,9 +22,14 @@ class AdminunitTypeController extends Controller
         $this->unitTypeRepository = $unitTypeRepository;
    }
 
-   public function index()
+   public function index(Request $request)
    {
-        $unitTypes = $this->unitTypeRepository->get();
+        $unitTypes = $this->unitTypeRepository->get([
+            'search' => [
+                'name' => $request->name
+            ],
+            'paginate' => $request->per_page
+        ]);
 
         return new UnitTypeResourceCollection($unitTypes);
    }

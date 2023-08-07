@@ -13,9 +13,16 @@ class UnitTypeRepository
         $this->model = $model;
     }
 
-    public function get()
+    public function get($params = [])
     {
-        $unitTypes = $this->model;
+        $unitTypes = $this->model
+            ->when(!empty($params['search']['name']), function ($query) use ($params){
+                return $query->where('name', 'LIKE', '%' . $params['search']['name'] . '%' );
+            });
+
+        if (!empty($params['paginate'])) {
+            return $unitTypes->paginate($params['paginate']);
+        }
 
         return $unitTypes->get();
     }

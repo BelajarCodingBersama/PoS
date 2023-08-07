@@ -9,6 +9,7 @@ use App\Api\Resources\PayrollSettingResourceCollection;
 use App\Http\Controllers\Controller;
 use App\Models\PayrollSetting;
 use App\Repositories\PayrollSettingRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -21,9 +22,15 @@ class AdminPayrollSettingController extends Controller
         $this->payrollSettingRepository = $payrollSettingRepository;
    }
 
-   public function index()
+   public function index(Request $request)
    {
-        $payrollSettings = $this->payrollSettingRepository->get();
+        $payrollSettings = $this->payrollSettingRepository->get([
+            'search' => [
+                'name' => $request->name,
+                'unit_type_id' => $request->unit_type_id
+            ],
+            'paginate' => $request->per_page
+        ]);
 
         return new PayrollSettingResourceCollection($payrollSettings);
    }

@@ -115,7 +115,7 @@ Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
 
     Route::post('logout', [AuthController::class, 'logout'])
-         ->middleware('auth:sanctum', 'ability:admin,cashier');
+         ->middleware('auth:sanctum', 'ability:admin,cashier,finance');
 });
 
 Route::prefix('cashier')->middleware('auth:sanctum', 'abilities:cashier')->group(function () {

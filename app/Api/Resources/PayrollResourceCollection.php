@@ -19,6 +19,7 @@ class PayrollResourceCollection extends ResourceCollection
                 'allowances' => $payroll->allowances,
                 'tax' => $payroll->tax,
                 'net_pay' => $payroll->net_pay,
+                'payment_date' => $payroll->payment_date,
                 'status' => $payroll->status,
 
                 'user' => $this->when(

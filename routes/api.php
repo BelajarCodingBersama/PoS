@@ -150,6 +150,7 @@ Route::prefix('finance')->middleware('auth:sanctum', 'abilities:finance')->group
 
     Route::prefix('payrolls')->group(function () {
         Route::get('/', [FinancePayrollController::class, 'index']);
+        Route::get('{payroll}/show', [FinancePayrollController::class, 'show']);
         Route::patch('{payroll}/update', [FinancePayrollController::class, 'update']);
     });
 });

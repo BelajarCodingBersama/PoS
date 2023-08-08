@@ -3,6 +3,7 @@
 namespace App\Api\Controllers\Finance;
 
 use App\Api\Requests\PayrollUpdateRequest;
+use App\Api\Resources\PayrollResource;
 use App\Api\Resources\PayrollResourceCollection;
 use App\Http\Controllers\Controller;
 use App\Models\Payroll;
@@ -19,11 +20,18 @@ class FinancePayrollController extends Controller
         $this->payrollRepository = $payrollRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $payrolls = $this->payrollRepository->get();
+        $payrolls = $this->payrollRepository->get([
+            'paginate' => $request->per_page
+        ]);
 
         return new PayrollResourceCollection($payrolls);
+    }
+
+    public function show(Payroll $payroll)
+    {
+        return new PayrollResource($payroll);
     }
 
     public function update(PayrollUpdateRequest $request, Payroll $payroll)

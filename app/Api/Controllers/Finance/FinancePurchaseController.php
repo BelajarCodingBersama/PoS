@@ -4,6 +4,7 @@ namespace App\Api\Controllers\Finance;
 
 use App\Api\Requests\PurchaseStoreRequest;
 use App\Api\Requests\PurchaseUpdateRequest;
+use App\Api\Resources\PurchaseResource;
 use App\Api\Resources\PurchaseResourceCollection;
 use App\Http\Controllers\Controller;
 use App\Models\Purchase;
@@ -56,6 +57,11 @@ class FinancePurchaseController extends Controller
         return response()->json([
             'message' => 'Purchase successfully added.'
         ], 201);
+    }
+
+    public function show(Purchase $purchase)
+    {
+        return new PurchaseResource($purchase);
     }
 
     public function update(PurchaseUpdateRequest $request, Purchase $purchase)

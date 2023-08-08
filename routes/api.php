@@ -30,6 +30,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::prefix('admin')->middleware('auth:sanctum', 'ability:admin,finance')->group(function () {
+    Route::prefix('products')->group(function () {
+        Route::get('/', [AdminProductController::class, 'index']);
+    });
+
+    Route::prefix('sellers')->group(function () {
+        Route::get('/', [AdminSellerController::class, 'index']);
+    });
+});
+
 Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(function () {
     Route::prefix('product-types')->group(function () {
         Route::get('/', [AdminProductTypeController::class, 'index']);
@@ -40,7 +50,6 @@ Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(fun
     });
 
     Route::prefix('products')->group(function () {
-        Route::get('/', [AdminProductController::class, 'index']);
         Route::post('store', [AdminProductController::class, 'store']);
         Route::get('{product}/show', [AdminProductController::class, 'show']);
         Route::patch('{product}/update', [AdminProductController::class, 'update']);
@@ -71,7 +80,6 @@ Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(fun
     });
 
     Route::prefix('sellers')->group(function () {
-        Route::get('/', [AdminSellerController::class, 'index']);
         Route::post('store', [AdminSellerController::class, 'store']);
         Route::get('{seller}/show', [AdminSellerController::class, 'show']);
         Route::patch('{seller}/update', [AdminSellerController::class, 'update']);
@@ -135,6 +143,7 @@ Route::prefix('finance')->middleware('auth:sanctum', 'abilities:finance')->group
     Route::prefix('purchases')->group(function () {
         Route::get('/', [FinancePurchaseController::class, 'index']);
         Route::post('store', [FinancePurchaseController::class, 'store']);
+        Route::get('{purchase}/show', [FinancePurchaseController::class, 'show']);
         Route::patch('{purchase}/update', [FinancePurchaseController::class, 'update']);
         Route::delete('{purchase}/delete', [FinancePurchaseController::class, 'destroy']);
     });

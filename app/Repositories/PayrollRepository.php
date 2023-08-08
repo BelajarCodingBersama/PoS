@@ -13,9 +13,13 @@ class PayrollRepository
         $this->model = $model;
     }
 
-    public function get()
+    public function get($params = [])
     {
         $payrolls = $this->model;
+
+        if (!empty($params['paginate'])) {
+            return $payrolls->paginate($params['paginate']);
+        }
 
         return $payrolls->get();
     }

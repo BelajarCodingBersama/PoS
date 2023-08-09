@@ -4,6 +4,7 @@ namespace App\Api\Controllers\Cashier;
 
 use App\Api\Requests\CartStoreRequest;
 use App\Api\Requests\CartUpdateRequest;
+use App\Api\Resources\CartResource;
 use App\Api\Resources\CartResourceCollection;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
@@ -35,6 +36,8 @@ class CashierCartController extends Controller
     {
         try {
             DB::beginTransaction();
+
+            $request->merge(['user_id' => auth()->id()]);
 
             /** check product in cart */
             $productInCart = Cart::where('user_id', auth()->id())
@@ -68,6 +71,11 @@ class CashierCartController extends Controller
         return response()->json([
             'message' => 'Successfully added to cart.'
         ], 201);
+    }
+
+    public function show(Cart $cart)
+    {
+        return new CartResource($cart);
     }
 
     public function update(CartUpdateRequest $request, Cart $cart)

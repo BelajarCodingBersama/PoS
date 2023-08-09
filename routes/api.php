@@ -30,11 +30,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('admin')->middleware('auth:sanctum', 'ability:admin,finance')->group(function () {
+Route::prefix('admin')->middleware('auth:sanctum', 'ability:admin,finance,cashier')->group(function () {
     Route::prefix('products')->group(function () {
         Route::get('/', [AdminProductController::class, 'index']);
     });
+});
 
+Route::prefix('admin')->middleware('auth:sanctum', 'ability:admin,finance')->group(function () {
     Route::prefix('sellers')->group(function () {
         Route::get('/', [AdminSellerController::class, 'index']);
     });
@@ -130,6 +132,7 @@ Route::prefix('cashier')->middleware('auth:sanctum', 'abilities:cashier')->group
     Route::prefix('carts')->group(function () {
         Route::get('/', [CashierCartController::class, 'index']);
         Route::post('store', [CashierCartController::class, 'store']);
+        Route::get('{cart}/show', [CashierCartController::class, 'show']);
         Route::patch('{cart}/update', [CashierCartController::class, 'update']);
         Route::delete('{cart}/delete', [CashierCartController::class, 'destroy']);
     });

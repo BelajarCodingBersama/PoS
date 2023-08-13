@@ -42,9 +42,14 @@ Route::prefix('admin')->middleware('auth:sanctum', 'ability:admin,finance')->gro
     });
 });
 
-Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(function () {
+Route::prefix('admin')->middleware('auth:sanctum', 'ability:admin,cashier')->group(function () {
     Route::prefix('product-types')->group(function () {
         Route::get('/', [AdminProductTypeController::class, 'index']);
+    });
+});
+
+Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(function () {
+    Route::prefix('product-types')->group(function () {
         Route::post('store', [AdminProductTypeController::class, 'store']);
         Route::get('{productType}/show', [AdminProductTypeController::class, 'show']);
         Route::patch('{productType}/update', [AdminProductTypeController::class, 'update']);

@@ -2,16 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Seller>
  */
-class UserFactory extends Factory
+class SellerFactory extends Factory
 {
-    protected $model = User::class;
     /**
      * Define the model's default state.
      *
@@ -19,10 +17,11 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $company = fake()->company();
+
         return [
-            'username' => fake()->firstName(),
-            'password' => bcrypt('secret'),
-            'role_id' => rand(1,3),
+            'name' => $company,
+            'slug' => Str::slug($company)
         ];
     }
 }

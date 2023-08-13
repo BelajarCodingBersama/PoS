@@ -19,6 +19,14 @@ class RoleSeeder extends Seeder
                 'name' => 'Admin',
                 'slug' => Str::slug('admin')
             ],
+            [
+                'name' => 'Cashier',
+                'slug' => Str::slug('cashier')
+            ],
+            [
+                'name' => 'Finance',
+                'slug' => Str::slug('finance')
+            ],
         ];
 
         foreach ($roles as $role) {

@@ -13,16 +13,6 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = [
-            [
-                'username' => 'admin',
-                'password' => bcrypt('secret'),
-                'role_id' => 1
-            ]
-        ];
-
-        foreach ($users as $user) {
-            User::create($user);
-        }
+        User::factory()->count(50)->create();
     }
 }

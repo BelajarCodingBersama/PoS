@@ -16,17 +16,37 @@ class ProductTypeSeeder extends Seeder
     {
         $productTypes = [
             [
-                'name' => 'A',
-                'slug' => Str::slug('A')
+                'name' => 'T-shirt',
+                'slug' => Str::slug('T-shirt')
             ],
             [
-                'name' => 'B',
-                'slug' => Str::slug('B')
+                'name' => 'Shirt',
+                'slug' => Str::slug('Shirt')
             ],
             [
-                'name' => 'C',
-                'slug' => Str::slug('C')
-            ]
+                'name' => 'Sweater',
+                'slug' => Str::slug('Sweater')
+            ],
+            [
+                'name' => 'Dress',
+                'slug' => Str::slug('Dress')
+            ],
+            [
+                'name' => 'Suit',
+                'slug' => Str::slug('Suit')
+            ],
+            [
+                'name' => 'Jacket',
+                'slug' => Str::slug('Jacket')
+            ],
+            [
+                'name' => 'Shorts',
+                'slug' => Str::slug('Shorts')
+            ],
+            [
+                'name' => 'Jeans',
+                'slug' => Str::slug('Jeans')
+            ],
         ];
 
         foreach ($productTypes as $productType) {

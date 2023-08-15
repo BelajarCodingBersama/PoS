@@ -7,7 +7,7 @@ use App\Models\Transaction;
 class TransactionRepository {
 
     private $model;
-    
+
     public function __construct(Transaction $model)
     {
         $this->model = $model;
@@ -16,6 +16,10 @@ class TransactionRepository {
     public function get($params = [])
     {
         $transactions = $this->model;
+
+        if (!empty($params['paginate'])) {
+            return $transactions->paginate($params['paginate']);
+        }
 
         return $transactions->get();
     }

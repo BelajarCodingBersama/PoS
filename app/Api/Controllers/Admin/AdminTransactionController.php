@@ -15,10 +15,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class AdminTransactionController extends Controller
-{   
+{
     private $transactionRepository;
     private $transactionDetailRepository;
-    
+
     public function __construct(
         TransactionDetailRepository $transactionDetailRepository,
         TransactionRepository $transactionRepository
@@ -28,9 +28,11 @@ class AdminTransactionController extends Controller
         $this->transactionDetailRepository = $transactionDetailRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $transactions = $this->transactionRepository->get();
+        $transactions = $this->transactionRepository->get([
+            'paginate' => $request->per_page
+        ]);
 
         return new TransactionResourceCollection($transactions);
     }

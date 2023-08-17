@@ -19,6 +19,11 @@ class UserResourceCollection extends ResourceCollection
                 'role' => $this->when(
                     RequestHelper::doesQueryParamsHasValue($request->query('include'), 'role'),
                     (new RoleResource($user->role))
+                ),
+
+                'file' => $this->when(
+                    RequestHelper::doesQueryParamsHasValue($request->query('include'), 'file'),
+                    (new FileResource($user->file))
                 )
             ];
         });

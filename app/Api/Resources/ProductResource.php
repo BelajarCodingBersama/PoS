@@ -21,6 +21,11 @@ class ProductResource extends JsonResource
             'product_type' => $this->when(
                 RequestHelper::doesQueryParamsHasValue($request->query('include'), 'product_type'),
                 (new ProductTypeResource($this->productType))
+            ),
+
+            'file' => $this->when(
+                RequestHelper::doesQueryParamsHasValue($request->query('include'), 'file'),
+                (new FileResource($this->file))
             )
         ];
     }

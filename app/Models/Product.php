@@ -20,4 +20,9 @@ class Product extends Model
     {
         return $this->belongsTo(ProductType::class);
     }
+
+    public function file()
+    {
+        return $this->belongsTo(File::class);
+    }
 }

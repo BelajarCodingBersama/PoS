@@ -46,7 +46,7 @@ class AdminProductController extends Controller
 
             $data = $request->only([
                 'name', 'slug', 'description', 'price', 'amount',
-                'product_type_id'
+                'product_type_id', 'file_id'
             ]);
 
             $product = new Product();
@@ -82,7 +82,7 @@ class AdminProductController extends Controller
 
             $data = $request->only([
                 'name', 'slug', 'description', 'price', 'amount',
-                'product_type_id'
+                'product_type_id', 'file_id'
             ]);
 
             $this->productRepository->save($product->fill($data));

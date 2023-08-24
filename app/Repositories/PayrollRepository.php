@@ -15,7 +15,21 @@ class PayrollRepository
 
     public function get($params = [])
     {
-        $payrolls = $this->model;
+        $payrolls = $this->model
+            ->when(!empty($params['search']['name']), function ($query) use ($params) {
+                return $query->whereHas('user', function ($query) use ($params) {
+                    return $query->where('username', 'LIKE', '%' . $params['search']['name'] . '%');
+                });
+            })
+            ->when(!empty($params['search']['status']), function ($query) use ($params) {
+                return $query->where('status', 'LIKE', '%' . $params['search']['status'] . '%');
+            })
+            ->when(!empty($params['search']['month']), function ($query) use ($params) {
+                return $query->whereDate('created_at', 'LIKE', '%' . $params['search']['month'] . '%');
+            })
+            ->when(!empty($params['search']['year']), function ($query) use ($params) {
+                return $query->whereDate('created_at', 'LIKE', '%' . $params['search']['year'] . '%');
+            });
 
         if (!empty($params['paginate'])) {
             return $payrolls->paginate($params['paginate']);

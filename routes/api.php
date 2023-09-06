@@ -66,6 +66,7 @@ Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(fun
     Route::prefix('users')->group(function () {
         Route::get('/', [AdminUserController::class, 'index']);
         Route::post('store', [AdminUserController::class, 'store']);
+        Route::get('{user}/show', [AdminUserController::class, 'show']);
         Route::patch('{user}/update', [AdminUserController::class, 'update']);
     });
 

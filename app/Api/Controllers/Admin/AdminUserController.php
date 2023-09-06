@@ -4,6 +4,7 @@ namespace App\Api\Controllers\Admin;
 
 use App\Api\Requests\UserStoreRequest;
 use App\Api\Requests\UserUpdateRequest;
+use App\Api\Resources\UserResource;
 use App\Api\Resources\UserResourceCollection;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -61,6 +62,11 @@ class AdminUserController extends Controller
         return response()->json([
             'message' => 'User successfully created.'
         ], 201);
+    }
+
+    public function show(User $user)
+    {
+        return new UserResource($user);
     }
 
     public function update(UserUpdateRequest $request, User $user)

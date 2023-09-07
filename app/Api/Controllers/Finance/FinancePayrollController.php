@@ -46,7 +46,7 @@ class FinancePayrollController extends Controller
 
         $allowances = PayrollSetting::where('name', 'allowances')->first();
         $allowancesType = $allowances->unitType->name;
-        
+
         $tax = PayrollSetting::where('name', 'tax')->first();
         $taxType = $tax->unitType->name;
 
@@ -56,9 +56,8 @@ class FinancePayrollController extends Controller
             $salary = $user->role->salary->nominal;
             $nominalAllowance = 0;
             $nominalTax = 0;
-            $paymentDate = $request->payment_date;
-            $paymentStatus = Payroll::STATUS_PENDING;
-            
+            $paymentStatus = $request->status;
+
             if ($allowancesType == 'percent') {
                 $nominalAllowance = ($salary * $allowances->nominal) / 100;
             } else if ($allowancesType == 'number') {
@@ -71,10 +70,13 @@ class FinancePayrollController extends Controller
                 $nominalTax = $tax->nominal;
             }
 
-            if (!empty($paymentDate)) {
-                $paymentStatus = $request->status;
+            /** check status */
+            if ($paymentStatus == Payroll::STATUS_PAID) {
+                $paymentDate = $request->payment_date;
+            } else {
+                $paymentDate = null;
             }
-            
+
             $month = Carbon::now('m');
             $payrollCheck = Payroll::where('user_id', $user->id)
                 ->whereMonth('created_at', $month)
@@ -85,7 +87,7 @@ class FinancePayrollController extends Controller
                     'message' => 'Data already created in this month'
                 ], 400);
             }
-            
+
             $payroll = new Payroll();
 
             $data = [
@@ -125,14 +127,17 @@ class FinancePayrollController extends Controller
         try {
             DB::beginTransaction();
 
-            $paymentDate = $request->payment_date;
+            $paymentStatus = $request->status;
 
-            if (!empty($paymentDate)) {
-                $paymentStatus = $request->status;
-            } 
+            /** check status */
+            if ($paymentStatus == Payroll::STATUS_PAID) {
+                $paymentDate = $request->payment_date;
+            } else {
+                $paymentDate = null;
+            }
 
             $request->merge([
-                'status' => $paymentStatus
+                'payment_date' => $paymentDate
             ]);
 
             $data = $request->only([

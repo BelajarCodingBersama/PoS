@@ -14,9 +14,9 @@ class PayrollStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
+            'user_id' => 'required|string|max:255|exists:users,id',
             'payment_date' => 'nullable|date|date_format:Y-m-d',
-            'status' => 'required'
+            'status' => 'required|in:Paid,Pending'
         ];
     }
 }

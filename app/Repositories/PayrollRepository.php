@@ -25,10 +25,10 @@ class PayrollRepository
                 return $query->where('status', 'LIKE', '%' . $params['search']['status'] . '%');
             })
             ->when(!empty($params['search']['month']), function ($query) use ($params) {
-                return $query->whereDate('created_at', 'LIKE', '%' . $params['search']['month'] . '%');
+                return $query->whereMonth('created_at', $params['search']['month']);
             })
             ->when(!empty($params['search']['year']), function ($query) use ($params) {
-                return $query->whereDate('created_at', 'LIKE', '%' . $params['search']['year'] . '%');
+                return $query->whereYear('created_at', $params['search']['year']);
             });
 
         if (!empty($params['paginate'])) {

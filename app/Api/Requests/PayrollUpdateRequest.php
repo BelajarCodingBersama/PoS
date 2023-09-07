@@ -15,7 +15,7 @@ class PayrollUpdateRequest extends FormRequest
     {
         return [
             'payment_date' => 'required|date|date_format:Y-m-d',
-            'status' => 'required'
+            'status' => 'required|in:Paid,Pending'
         ];
     }
 }

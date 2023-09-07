@@ -11,6 +11,7 @@ use App\Models\Payroll;
 use App\Models\PayrollSetting;
 use App\Models\User;
 use App\Repositories\PayrollRepository;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,7 +42,7 @@ class FinancePayrollController extends Controller
 
     public function store(PayrollStoreRequest $request)
     {
-        $user = User::where('username', $request->name)->first();
+        $user = User::where('id', $request->user_id)->first();
 
         $allowances = PayrollSetting::where('name', 'allowances')->first();
         $allowancesType = $allowances->unitType->name;
@@ -73,7 +74,18 @@ class FinancePayrollController extends Controller
             if (!empty($paymentDate)) {
                 $paymentStatus = $request->status;
             }
+            
+            $month = Carbon::now('m');
+            $payrollCheck = Payroll::where('user_id', $user->id)
+                ->whereMonth('created_at', $month)
+                ->first();
 
+            if (!empty($payrollCheck)) {
+                return response()->json([
+                    'message' => 'Data already created in this month'
+                ], 400);
+            }
+            
             $payroll = new Payroll();
 
             $data = [

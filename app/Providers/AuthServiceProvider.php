@@ -6,10 +6,14 @@ namespace App\Providers;
 
 use App\Models\Cart;
 use App\Models\Payroll;
+use App\Models\Product;
 use App\Models\Purchase;
+use App\Models\Role;
 use App\Policies\CartPolicy;
 use App\Policies\PayrollPolicy;
+use App\Policies\ProductPolicy;
 use App\Policies\PurchasePolicy;
+use App\Policies\RolePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -22,7 +26,9 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Cart::class => CartPolicy::class,
         Purchase::class => PurchasePolicy::class,
-        Payroll::class => PayrollPolicy::class
+        Payroll::class => PayrollPolicy::class,
+        Role::class => RolePolicy::class,
+        Product::class => ProductPolicy::class,
     ];
 
     /**

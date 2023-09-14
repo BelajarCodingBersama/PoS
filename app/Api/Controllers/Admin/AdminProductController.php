@@ -103,6 +103,8 @@ class AdminProductController extends Controller
 
     public function destroy(Product $product)
     {
+        $this->authorize('delete', $product);
+
         try {
             DB::beginTransaction();
 

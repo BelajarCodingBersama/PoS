@@ -96,14 +96,10 @@ class AdminRoleController extends Controller
 
     public function destroy(Role $role)
     {
+        $this->authorize('delete', $role);
+
         try {
             DB::beginTransaction();
-
-            if ($role->users->count() >= 1) {
-                return response()->json([
-                    'message' => "Can't delete this data."
-                ], 400);
-            }
 
             $softDeleted = $role->delete();
 

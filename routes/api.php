@@ -50,6 +50,10 @@ Route::prefix('admin')->middleware('auth:sanctum', 'ability:admin,cashier')->gro
     Route::prefix('product-types')->group(function () {
         Route::get('/', [AdminProductTypeController::class, 'index']);
     });
+
+    Route::prefix('products')->group(function () {
+        Route::get('{product}/show', [AdminProductController::class, 'show']);
+    });
 });
 
 Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(function () {
@@ -62,7 +66,6 @@ Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(fun
 
     Route::prefix('products')->group(function () {
         Route::post('store', [AdminProductController::class, 'store']);
-        Route::get('{product}/show', [AdminProductController::class, 'show']);
         Route::patch('{product}/update', [AdminProductController::class, 'update']);
         Route::delete('{product}/delete', [AdminProductController::class, 'destroy']);
     });

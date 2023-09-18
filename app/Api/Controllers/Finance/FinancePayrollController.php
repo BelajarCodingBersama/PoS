@@ -11,6 +11,7 @@ use App\Models\Payroll;
 use App\Models\PayrollSetting;
 use App\Models\User;
 use App\Repositories\PayrollRepository;
+use PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -157,5 +158,21 @@ class FinancePayrollController extends Controller
         return response()->json([
             'message' => 'Payroll successfully updated.'
         ], 200);
+    }
+
+    public function print(Request $request)
+    {
+        $payrolls = $this->payrollRepository->get([
+            'search' => [
+                'month' => $request->month,
+                'year' => $request->year
+            ]
+        ]);
+
+        $pdf = PDF::loadview('finance', [
+           'payrolls' => $payrolls
+        ]);
+
+        return $pdf->stream();
     }
 }

@@ -15,6 +15,7 @@ use App\Api\Controllers\AuthController;
 use App\Api\Controllers\Cashier\CashierCartController;
 use App\Api\Controllers\Cashier\CashierTransactionController;
 use App\Api\Controllers\Finance\FinancePayrollController;
+use App\Api\Controllers\Finance\FinancePayrollReportController;
 use App\Api\Controllers\Finance\FinancePurchaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -168,5 +169,6 @@ Route::prefix('finance')->middleware('auth:sanctum', 'abilities:finance')->group
         Route::post('store', [FinancePayrollController::class, 'store']);
         Route::get('{payroll}/show', [FinancePayrollController::class, 'show']);
         Route::patch('{payroll}/update', [FinancePayrollController::class, 'update']);
+        Route::get('report', [FinancePayrollController::class, 'print']);
     });
 });

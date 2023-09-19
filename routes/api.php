@@ -169,6 +169,6 @@ Route::prefix('finance')->middleware('auth:sanctum', 'abilities:finance')->group
         Route::post('store', [FinancePayrollController::class, 'store']);
         Route::get('{payroll}/show', [FinancePayrollController::class, 'show']);
         Route::patch('{payroll}/update', [FinancePayrollController::class, 'update']);
-        Route::get('report', [FinancePayrollController::class, 'print']);
+        // Route::get('report', [FinancePayrollController::class, 'print']);
     });
 });

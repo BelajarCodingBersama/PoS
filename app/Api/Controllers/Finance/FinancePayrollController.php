@@ -169,8 +169,16 @@ class FinancePayrollController extends Controller
             ]
         ]);
 
+        if (!empty($request->month)) {
+            $month = Carbon::create()->month($request->month)->format('F');
+        } else {
+            $month = null;
+        }
+
         $pdf = PDF::loadview('finance', [
-           'payrolls' => $payrolls
+           'payrolls' => $payrolls,
+           'month' => $month,
+           'year' => $request->year,
         ]);
 
         return $pdf->stream();

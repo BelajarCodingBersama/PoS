@@ -181,6 +181,6 @@ class FinancePayrollController extends Controller
            'year' => $request->year,
         ]);
 
-        return $pdf->stream();
+        return $pdf->download();
     }
 }

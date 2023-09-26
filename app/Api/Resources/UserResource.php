@@ -22,6 +22,11 @@ class UserResource extends JsonResource
             'file' => $this->when(
                 RequestHelper::doesQueryParamsHasValue($request->query('include'), 'file'),
                 (new FileResource($this->file))
+            ),
+
+            'payrolls' => $this->when(
+                RequestHelper::doesQueryParamsHasValue($request->query('include'), 'payrolls'),
+                (new PayrollResourceCollection($this->payrolls))
             )
         ];
     }

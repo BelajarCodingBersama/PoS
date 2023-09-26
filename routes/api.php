@@ -136,8 +136,11 @@ Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(fun
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
 
-    Route::post('logout', [AuthController::class, 'logout'])
-         ->middleware('auth:sanctum', 'ability:admin,cashier,finance');
+    Route::middleware('auth:sanctum', 'ability:admin,cashier,finance')->group(function () {
+        Route::get('show', [AuthController::class, 'show']);
+        Route::patch('change-password', [AuthController::class, 'changePassword']);
+        Route::post('logout', [AuthController::class, 'logout']);
+    });
 });
 
 Route::prefix('cashier')->middleware('auth:sanctum', 'abilities:cashier')->group(function () {

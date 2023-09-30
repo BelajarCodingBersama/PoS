@@ -15,6 +15,7 @@ use PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class FinancePayrollController extends Controller
 {
@@ -175,12 +176,34 @@ class FinancePayrollController extends Controller
             $month = null;
         }
 
-        $pdf = PDF::loadview('finance', [
-           'payrolls' => $payrolls,
-           'month' => $month,
-           'year' => $request->year,
-        ]);
+        $path = public_path('storage/pdfs');
 
-        return $pdf->download();
+        // check directory
+        if (File::isDirectory($path)) {
+            // remove file in directory
+            if (File::exists($path)) {
+                File::deleteDirectory($path, 0755, true);
+            }
+        } else {
+            File::makeDirectory($path, 0755, true);
+        }
+
+        $pdfContent = view('finance', [
+            'payrolls' => $payrolls,
+            'month' => $month,
+            'year' => $request->year,
+        ])->render();
+
+        // Generate a unique file name
+        $filename = 'generated-pdf-' . time() . '.pdf';
+
+        // Save the PDF to the public directory
+        PDF::loadHTML($pdfContent)->save(public_path('storage/pdfs/' . $filename));
+
+        return response()->json([
+            'data' => [
+                'pdf_url' => asset('storage/pdfs/' . $filename)
+            ]
+        ]);
     }
 }

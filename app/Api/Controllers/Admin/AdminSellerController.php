@@ -87,7 +87,7 @@ class AdminSellerController extends Controller
 
         return response()->json([
             'message' => 'Seller successfully updated.'
-        ], 201);
+        ], 200);
     }
 
     public function destroy(Seller $seller)
@@ -97,7 +97,7 @@ class AdminSellerController extends Controller
 
             if ($seller->purchases->count() >= 1) {
                 return response()->json([
-                    'message' => "Can't delete this data."
+                    'message' => "Data can't be deleted as it has relationships."
                 ], 400);
             }
 
@@ -119,6 +119,6 @@ class AdminSellerController extends Controller
 
         return response()->json([
             'message' => 'Seller successfully deleted.'
-        ], 201);
+        ], 200);
     }
 }

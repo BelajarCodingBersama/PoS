@@ -90,7 +90,7 @@ class AdminProductTypeController extends Controller
 
         return response()->json([
             'message' => 'Product type successfully updated.'
-        ], 201);
+        ], 200);
     }
 
     public function destroy(ProductType $productType)
@@ -100,7 +100,7 @@ class AdminProductTypeController extends Controller
 
             if ($productType->products->count() >= 1) {
                 return response()->json([
-                    'message' => "Can't delete this data."
+                    'message' => "Data can't be deleted as it has relationships."
                 ], 400);
             }
 
@@ -122,6 +122,6 @@ class AdminProductTypeController extends Controller
 
         return response()->json([
             'message' => 'Product type successfully deleted.'
-        ], 201);
+        ], 200);
     }
 }

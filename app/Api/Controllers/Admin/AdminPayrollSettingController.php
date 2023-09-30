@@ -88,7 +88,7 @@ class AdminPayrollSettingController extends Controller
 
         return response()->json([
             'message' => 'payroll setting successfully updated.'
-        ], 201);
+        ], 200);
     }
 
     public function destroy(PayrollSetting $payrollSetting)
@@ -109,6 +109,6 @@ class AdminPayrollSettingController extends Controller
 
         return response()->json([
             'message' => 'payroll setting successfully deleted.'
-        ], 201);
+        ], 200);
     }
 }

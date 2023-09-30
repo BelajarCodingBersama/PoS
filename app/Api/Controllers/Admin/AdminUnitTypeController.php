@@ -87,7 +87,7 @@ class AdminunitTypeController extends Controller
 
         return response()->json([
             'message' => 'unit type successfully updated.'
-        ], 201);
+        ], 200);
     }
 
     public function destroy(UnitType $unitType)
@@ -97,7 +97,7 @@ class AdminunitTypeController extends Controller
 
             if ($unitType->payrollSettings->count() >= 1) {
                 return response()->json([
-                    'message' => "Can't delete this data."
+                    'message' => "Data can't be deleted as it has relationships."
                 ], 400);
             }
 
@@ -114,6 +114,6 @@ class AdminunitTypeController extends Controller
 
         return response()->json([
             'message' => 'unit type successfully deleted.'
-        ], 201);
+        ], 200);
     }
 }

@@ -89,7 +89,7 @@ class FinancePurchaseController extends Controller
 
         return response()->json([
             'message' => 'Purchase successfully updated.'
-        ], 201);
+        ], 200);
     }
 
     public function destroy(Purchase $purchase)

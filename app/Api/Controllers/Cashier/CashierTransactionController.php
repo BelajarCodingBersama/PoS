@@ -33,7 +33,7 @@ class CashierTransactionController
     }
 
     public function store(Request $request)
-    {  
+    {
         $user = Auth::user()->id;
 
         try {
@@ -44,7 +44,7 @@ class CashierTransactionController
             /** check user who has cart */
             $carts = Cart::where('user_id', $user)->get();
 
-            /** check, this cart cant be empty */
+            /** check, this cart can't be empty */
             if (empty($carts->count())) {
                 return response()->json([
                     'message' => 'This cart is empty.'
@@ -71,7 +71,7 @@ class CashierTransactionController
             /** store the data transaction */
             $transaction = new Transaction();
             $this->transactionRepository->save($transaction->fill($data));
-            
+
             foreach ($carts as $cart) {
                 $data = [
                     'transaction_id' => $transaction->id,
@@ -79,11 +79,11 @@ class CashierTransactionController
                     'amount' => $cart->amount,
                     'product_id' => $cart->product_id
                 ];
-         
+
                 /** store data transcation detail */
                 $transactionDetail = new TransactionDetail();
                 $this->transactionDetailRepository->save($transactionDetail->fill($data));
-                
+
                 /** update product amount */
                 $product = Product::find($cart->product_id);
                 $this->productRepository->save($product->fill([
@@ -99,12 +99,12 @@ class CashierTransactionController
             DB::rollBack();
 
             return response()->json([
-                'message' => 'Something went wrong,' . $th->getMessage() 
+                'message' => 'Something went wrong,' . $th->getMessage()
             ], 500);
         }
-        
+
         return response()->json([
             'message' => 'Transaction successfully created.'
-        ], 200);
+        ], 201);
     }
 }

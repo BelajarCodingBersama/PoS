@@ -91,7 +91,7 @@ class AdminRoleController extends Controller
 
         return response()->json([
             'message' => 'Role successfully updated.'
-        ], 201);
+        ], 200);
     }
 
     public function destroy(Role $role)
@@ -119,6 +119,6 @@ class AdminRoleController extends Controller
 
         return response()->json([
             'message' => 'Role successfully deleted.'
-        ], 201);
+        ], 200);
     }
 }

@@ -100,7 +100,7 @@ class CashierCartController extends Controller
 
         return response()->json([
             'message' => 'Cart successfully updated.'
-        ], 201);
+        ], 200);
     }
 
     public function destroy(Cart $cart)

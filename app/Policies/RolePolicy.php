@@ -47,7 +47,7 @@ class RolePolicy
     {
         // check relations
         if ($role->users->count() >= 1 || !empty($role->salary)) {
-            return Response::denyWithStatus(400, "Can't delete this data.");
+            return Response::denyWithStatus(400, "Data can't be deleted as it has relationships.");
         }
 
         return Response::allow();

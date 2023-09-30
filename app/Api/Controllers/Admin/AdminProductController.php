@@ -98,7 +98,7 @@ class AdminProductController extends Controller
 
         return response()->json([
             'message' => 'Product successfully updated.'
-        ], 201);
+        ], 200);
     }
 
     public function destroy(Product $product)
@@ -126,6 +126,6 @@ class AdminProductController extends Controller
 
         return response()->json([
             'message' => 'Product successfully deleted.'
-        ], 201);
+        ], 200);
     }
 }

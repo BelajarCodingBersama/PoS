@@ -95,6 +95,6 @@ class AdminUserController extends Controller
 
         return response()->json([
             'message' => 'User successfully updated.'
-        ], 201);
+        ], 200);
     }
 }

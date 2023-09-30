@@ -51,7 +51,7 @@ class ProductPolicy
             $product->purchases->count() >=1 ||
             $product->transactionDetails->count() >= 1
         ) {
-            return Response::denyWithStatus(400, "Can't delete this data.");
+            return Response::denyWithStatus(400, "Data can't be deleted as it has relationships.");
         }
 
         return Response::allow();

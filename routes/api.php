@@ -1,5 +1,6 @@
 <?php
 
+use App\Api\Controllers\Admin\AdminDashboardController;
 use App\Api\Controllers\Admin\AdminExpenseTypeController;
 use App\Api\Controllers\Admin\AdminFileController;
 use App\Api\Controllers\Admin\AdminPayrollSettingController;
@@ -58,6 +59,8 @@ Route::prefix('admin')->middleware('auth:sanctum', 'ability:admin,cashier')->gro
 });
 
 Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(function () {
+    Route::get('dashboard', [AdminDashboardController::class, 'index']);
+
     Route::prefix('product-types')->group(function () {
         Route::post('store', [AdminProductTypeController::class, 'store']);
         Route::get('{productType}/show', [AdminProductTypeController::class, 'show']);

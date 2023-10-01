@@ -13,6 +13,7 @@ use App\Repositories\TransactionDetailRepository;
 use App\Repositories\TransactionRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class AdminTransactionController extends Controller
 {
@@ -40,5 +41,28 @@ class AdminTransactionController extends Controller
     public function show(Transaction $transaction)
     {
         return new TransactionResource($transaction);
+    }
+
+    public function export(Transaction $transaction)
+    {
+       try {
+        DB::beginTransaction();
+
+        $transaction = Transaction::where('id', $transaction->id)->first();
+
+        $pdf = PDF::loadview('transactionPDF', [
+            'transaction' => $transaction,
+         ]);
+ 
+         return $pdf->download();
+
+        DB::commit();
+       } catch (\Throwable $th) {
+        DB::rollBack();
+
+        return response()->json([
+            'message' => 'Data Not Found.' . $th->getMessage() 
+        ], 500);
+       }
     }
 }

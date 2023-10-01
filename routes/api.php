@@ -95,6 +95,7 @@ Route::prefix('admin')->middleware('auth:sanctum', 'abilities:admin')->group(fun
     Route::prefix('transactions')->group(function () {
         Route::get('/', [AdminTransactionController::class, 'index']);
         Route::get('{transaction}/show', [AdminTransactionController::class, 'show']);
+        Route::get('{transaction}/export', [AdminTransactionController::class, 'export']);
     });
 
     Route::prefix('sellers')->group(function () {

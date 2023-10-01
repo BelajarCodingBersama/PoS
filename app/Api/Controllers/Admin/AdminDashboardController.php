@@ -33,9 +33,6 @@ class AdminDashboardController extends Controller
         /** Product stocks */
         $productStocks = $this->productRepository->get([
             'select' => 'name, amount',
-            'search' => [
-                'year' => $request->year,
-            ],
             'order' => 'amount ASC'
         ]);
 

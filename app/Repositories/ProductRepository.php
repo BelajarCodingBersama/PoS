@@ -25,9 +25,6 @@ class ProductRepository
             ->when(!empty($params['search']['product_type_id']), function ($query) use ($params) {
                 return $query->where('product_type_id', $params['search']['product_type_id']);
             })
-            ->when(!empty($params['search']['year']), function ($query) use ($params) {
-                return $query->whereYear('created_at', $params['search']['year']);
-            })
             ->when(!empty($params['order']), function ($query) use ($params) {
                 return $query->orderByRaw($params['order']);
             });;

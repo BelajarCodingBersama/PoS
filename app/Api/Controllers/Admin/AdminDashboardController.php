@@ -46,7 +46,7 @@ class AdminDashboardController extends Controller
         /** List of products and total sales for each product */
         $productSales = Product::leftjoin('transaction_details', 'products.id', '=', 'transaction_details.product_id')
                             ->selectRaw('name as product_name, SUM(transaction_details.amount) as total')
-                            ->when(!empty($request->year), function ($query) {
+                            ->when(!empty($request->year), function ($query) use ($request) {
                                 return $query->whereYear('transaction_details.created_at', $request->year);
                             })
                             ->groupByRaw('product_name')

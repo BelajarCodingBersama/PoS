@@ -13,6 +13,7 @@ use App\Repositories\TransactionDetailRepository;
 use App\Repositories\TransactionRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use PDF;
 
 class AdminTransactionController extends Controller
@@ -45,24 +46,32 @@ class AdminTransactionController extends Controller
 
     public function export(Transaction $transaction)
     {
-       try {
-        DB::beginTransaction();
+        $path = public_path('storage/pdf-transactions');
 
-        $transaction = Transaction::where('id', $transaction->id)->first();
+        // Check directory
+        if (File::isDirectory($path)) {
+            // Remove file in directory
+            if (File::exists($path)) {
+                File::deleteDirectory($path, 0755, true);
+            }
+        } else {
+            File::makeDirectory($path, 0755, true);
+        }
 
-        $pdf = PDF::loadview('transactionPDF', [
-            'transaction' => $transaction,
-         ]);
- 
-         return $pdf->download();
+        $pdfContent = view('transactionPDF', [
+            'transaction' => $transaction
+        ])->render();
 
-        DB::commit();
-       } catch (\Throwable $th) {
-        DB::rollBack();
+        // Generate a unique file name
+        $filename = 'generated-pdf-transaction-' . time() . '.pdf';
+
+        // Save the PDF to the public directory
+        PDF::loadHTML($pdfContent)->save(public_path('storage/pdf-transactions/' . $filename));
 
         return response()->json([
-            'message' => 'Data Not Found.' . $th->getMessage() 
-        ], 500);
-       }
+            'data' => [
+                'pdf_url' => asset('storage/pdf-transactions/' . $filename)
+            ]
+        ]);
     }
 }

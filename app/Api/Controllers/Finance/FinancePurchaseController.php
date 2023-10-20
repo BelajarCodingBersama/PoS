@@ -7,12 +7,14 @@ use App\Api\Requests\PurchaseUpdateRequest;
 use App\Api\Resources\PurchaseResource;
 use App\Api\Resources\PurchaseResourceCollection;
 use App\Http\Controllers\Controller;
+use App\Imports\PurchaseImport;
 use App\Models\Product;
 use App\Models\Purchase;
 use App\Repositories\ProductRepository;
 use App\Repositories\PurchaseRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FinancePurchaseController extends Controller
 {
@@ -154,6 +156,15 @@ class FinancePurchaseController extends Controller
 
         return response()->json([
             'message' => 'Purchase successfully deleted.'
+        ], 200);
+    }
+
+    public function importPurchase()
+    {
+        Excel::import(new PurchaseImport, 'csv/purchase.csv');
+
+        return response()->json([
+            'message' => 'Import Success'
         ], 200);
     }
 }

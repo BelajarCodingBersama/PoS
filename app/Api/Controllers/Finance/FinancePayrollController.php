@@ -7,15 +7,20 @@ use App\Api\Requests\PayrollUpdateRequest;
 use App\Api\Resources\PayrollResource;
 use App\Api\Resources\PayrollResourceCollection;
 use App\Http\Controllers\Controller;
+use App\Imports\PayrollsImport;
 use App\Models\Payroll;
 use App\Models\PayrollSetting;
+use App\Models\Purchase;
 use App\Models\User;
 use App\Repositories\PayrollRepository;
 use PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FinancePayrollController extends Controller
 {
@@ -205,5 +210,14 @@ class FinancePayrollController extends Controller
                 'pdf_url' => asset('storage/pdfs/' . $filename)
             ]
         ]);
+    }
+
+    public function importPayroll(Request $request)
+    {
+        Excel::import(new PayrollsImport, 'csv/payroll.csv');
+
+        return response()->json([
+            'message' => 'Import Success.'
+        ], 200);
     }
 }

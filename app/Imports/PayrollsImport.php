@@ -6,19 +6,21 @@ use App\Models\Payroll;
 use App\Models\PayrollSetting;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithBatchInserts;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class PayrollsImport implements ToModel, WithHeadingRow
+class PayrollsImport implements ToModel, WithHeadingRow, WithValidation, WithBatchInserts, WithChunkReading
 {
     public function model(array $row)
-    {   
+    {
         $month = Carbon::now('m');
         $payrollCheck = Payroll::where('user_id', $row['user_id'])
             ->whereMonth('created_at', $month)
             ->first();
-            
+
         if (empty($payrollCheck)) {
             $user = User::findOrFail($row['user_id']);
             $role = $user->role->name;
@@ -45,6 +47,7 @@ class PayrollsImport implements ToModel, WithHeadingRow
             } else if ($taxType == 'number') {
                 $nominalTax = $tax->nominal;
             }
+
             /** check status */
             if ($paymentStatus == Payroll::STATUS_PAID) {
                 $paymentDate = $row['payment_date'];
@@ -52,7 +55,7 @@ class PayrollsImport implements ToModel, WithHeadingRow
             } else {
                 $date = null;
             }
-            
+
             return new Payroll([
                 'role' => $role,
                 'basic_salary' => $basic_salary,
@@ -64,5 +67,24 @@ class PayrollsImport implements ToModel, WithHeadingRow
                 'user_id' => $row['user_id']
             ]);
         }
+    }
+
+    public function rules(): array
+    {
+        return [
+            'user_id' => ['required', 'exists:users,id'],
+            'payment_date' => ['nullable', 'required_if:status,Paid', 'date', 'date_format:d-m-Y'],
+            'status' => ['required', 'in:Paid,Pending'],
+        ];
+    }
+
+    public function batchSize(): int
+    {
+        return 500;
+    }
+
+    public function chunkSize(): int
+    {
+        return 500;
     }
 }

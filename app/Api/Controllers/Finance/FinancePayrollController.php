@@ -2,6 +2,7 @@
 
 namespace App\Api\Controllers\Finance;
 
+use App\Api\Requests\ImportFileRequest;
 use App\Api\Requests\PayrollStoreRequest;
 use App\Api\Requests\PayrollUpdateRequest;
 use App\Api\Resources\PayrollResource;
@@ -212,12 +213,21 @@ class FinancePayrollController extends Controller
         ]);
     }
 
-    public function importPayroll(Request $request)
+    public function importPayroll(ImportFileRequest $request)
     {
-        Excel::import(new PayrollsImport, 'csv/payroll.csv');
+        $file = $request->file('file');
+        $extension = $file->getClientOriginalExtension();
+
+        if ($extension != 'csv') {
+            return response()->json([
+                'message' => 'The file field must be a file of type: csv'
+            ], 422);
+        }
+
+        Excel::import(new PayrollsImport, $request->file('file'));
 
         return response()->json([
-            'message' => 'Import Success.'
+            'message' => 'Import successfully.'
         ], 200);
     }
 }

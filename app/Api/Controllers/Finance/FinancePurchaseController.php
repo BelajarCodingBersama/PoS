@@ -2,6 +2,7 @@
 
 namespace App\Api\Controllers\Finance;
 
+use App\Api\Requests\ImportFileRequest;
 use App\Api\Requests\PurchaseStoreRequest;
 use App\Api\Requests\PurchaseUpdateRequest;
 use App\Api\Resources\PurchaseResource;
@@ -159,12 +160,21 @@ class FinancePurchaseController extends Controller
         ], 200);
     }
 
-    public function importPurchase()
+    public function importPurchase(ImportFileRequest $request)
     {
-        Excel::import(new PurchaseImport, 'csv/purchase.csv');
+        $file = $request->file('file');
+        $extension = $file->getClientOriginalExtension();
+
+        if ($extension != 'csv') {
+            return response()->json([
+                'message' => 'The file field must be a file of type: csv'
+            ], 422);
+        }
+
+        Excel::import(new PurchaseImport, $request->file('file'));
 
         return response()->json([
-            'message' => 'Import Success'
+            'message' => 'Import successfully.'
         ], 200);
     }
 }

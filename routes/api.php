@@ -171,7 +171,8 @@ Route::prefix('finance')->middleware('auth:sanctum', 'abilities:finance')->group
         Route::get('{purchase}/show', [FinancePurchaseController::class, 'show']);
         Route::patch('{purchase}/update', [FinancePurchaseController::class, 'update']);
         Route::delete('{purchase}/delete', [FinancePurchaseController::class, 'destroy']);
-        Route::post('import', [FinancePurchaseController::class, 'importPurchase']);
+        Route::post('import', [FinancePurchaseController::class, 'import']);
+        Route::get('download-template', [FinancePurchaseController::class, 'download']);
     });
 
     Route::prefix('payrolls')->group(function () {
@@ -180,6 +181,7 @@ Route::prefix('finance')->middleware('auth:sanctum', 'abilities:finance')->group
         Route::get('{payroll}/show', [FinancePayrollController::class, 'show']);
         Route::patch('{payroll}/update', [FinancePayrollController::class, 'update']);
         Route::get('report', [FinancePayrollController::class, 'print']);
-        Route::post('import', [FinancePayrollController::class, 'importPayroll']);
+        Route::post('import', [FinancePayrollController::class, 'import']);
+        Route::get('download-template', [FinancePayrollController::class, 'download']);
     });
 });

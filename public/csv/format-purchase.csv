@@ -1,0 +1,2 @@
+date;amount;price;product_id;seller_id
+Format Y-m-d, example: 2023-12-01;Must be greater than equal to 1, example: 100;Must be greater than equal to 1, example: 100000;ID product, example: 12;ID seller, example: 9

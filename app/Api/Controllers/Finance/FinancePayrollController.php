@@ -213,7 +213,7 @@ class FinancePayrollController extends Controller
         ]);
     }
 
-    public function importPayroll(ImportFileRequest $request)
+    public function import(ImportFileRequest $request)
     {
         $file = $request->file('file');
         $extension = $file->getClientOriginalExtension();
@@ -228,6 +228,15 @@ class FinancePayrollController extends Controller
 
         return response()->json([
             'message' => 'Import successfully.'
+        ], 200);
+    }
+
+    public function download()
+    {
+        return response()->json([
+            'data' => [
+                'url' => asset('csv/format-payroll.csv')
+            ]
         ], 200);
     }
 }

@@ -1,0 +1,2 @@
+﻿user_id;payment_date;status
+ID user, example: 12;Format d-m-Y, example: 01-12-2023;Value must be Pending or Paid, example: Paid

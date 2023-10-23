@@ -160,7 +160,7 @@ class FinancePurchaseController extends Controller
         ], 200);
     }
 
-    public function importPurchase(ImportFileRequest $request)
+    public function import(ImportFileRequest $request)
     {
         $file = $request->file('file');
         $extension = $file->getClientOriginalExtension();
@@ -175,6 +175,15 @@ class FinancePurchaseController extends Controller
 
         return response()->json([
             'message' => 'Import successfully.'
+        ], 200);
+    }
+
+    public function download()
+    {
+        return response()->json([
+            'data' => [
+                'url' => asset('csv/format-purchase.csv')
+            ]
         ], 200);
     }
 }

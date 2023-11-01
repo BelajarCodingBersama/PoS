@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Transaction extends Model
@@ -14,13 +16,13 @@ class Transaction extends Model
         'sub_total', 'total', 'user_id'
     ];
 
-    /** Relationship */
-    public function user()
+    /** Relationships */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function details()
+    public function details(): HasMany
     {
         return $this->hasMany(TransactionDetail::class);
     }

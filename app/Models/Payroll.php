@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Payroll extends Model
@@ -19,38 +21,51 @@ class Payroll extends Model
         'payment_date', 'net_pay', 'status', 'user_id'
     ];
 
-    /** Relationship */
-    public function user()
+    /** Relationships */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /** Acessor */
-    public function getFormatPaymentDateAttribute()
+    /** Acessors */
+    protected function formatPaymentDate(): Attribute
     {
-        if (empty($this->payment_date)) {
-            return null;
-        }
-        return Carbon::parse($this->payment_date)->format('d-m-Y');
+        return new Attribute(
+            get: function () {
+                if (empty($this->payment_date)) {
+                    return null;
+                }
+
+                return Carbon::parse($this->payment_date)->format('d-m-Y');
+            }
+        );
     }
 
-    public function getFormatBasicSalaryAttribute()
+    protected function formatBasicSalary(): Attribute
     {
-        return number_format($this->basic_salary, 0, ",", ".");
+        return new Attribute(
+            get: fn () => number_format($this->basic_salary, 0, ",", ".")
+        );
     }
 
-    public function getFormatAllowancesAttribute()
+    protected function formatAllowances(): Attribute
     {
-        return number_format($this->allowances, 0, ",", ".");
+        return new Attribute(
+            get: fn () => number_format($this->allowances, 0, ",", ".")
+        );
     }
 
-    public function getFormatTaxAttribute()
+    protected function formatTax(): Attribute
     {
-        return number_format($this->tax, 0, ",", ".");
+        return new Attribute(
+            get: fn () => number_format($this->tax, 0, ",", ".")
+        );
     }
 
-    public function getFormatNetPayAttribute()
+    protected function formatNetPay(): Attribute
     {
-        return number_format($this->net_pay, 0, ",", ".");
+        return new Attribute(
+            get: fn () => number_format($this->net_pay, 0, ",", ".")
+        );
     }
 }

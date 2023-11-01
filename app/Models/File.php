@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -12,14 +13,18 @@ class File extends Model
 
     protected $fillable = ['name', 'location'];
 
-    /** Acessor */
-    public function getLocationFileAttribute()
+    /** Acessors */
+    protected function locationFile(): Attribute
     {
-        return 'file/' . $this->location . '/' . $this->name;
+        return new Attribute(
+            get: fn () => 'file/' . $this->location . '/' . $this->name,
+        );
     }
 
-    public function getShowFileAttribute()
+    protected function showFile(): Attribute
     {
-        return Storage::url($this->location_file);
+        return new Attribute(
+            get: fn () => Storage::url($this->location_file)
+        );
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Purchase extends Model
 {
@@ -14,18 +15,18 @@ class Purchase extends Model
         'seller_id', 'user_id'
     ];
 
-    /** Relationship */
-    public function product()
+    /** Relationships */
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }
 
-    public function seller()
+    public function seller(): BelongsTo
     {
         return $this->belongsTo(Seller::class);
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductType extends Model
@@ -14,8 +15,8 @@ class ProductType extends Model
         'name', 'slug'
     ];
 
-    /** Relationship */
-    public function products()
+    /** Relationships */
+    public function products(): HasMany
     {
         return $this->hasMany(Product::class);
     }
